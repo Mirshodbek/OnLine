@@ -7,12 +7,13 @@ import 'package:flutter/services.dart';
 class MainProvider extends ChangeNotifier {
   final qrData = TextEditingController();
   final cloudFireStore = FirebaseFirestore.instance;
-  String qrCode, qrDataPerson = 'Mirshodbek';
+  String qrCode, message, buttonText, qrDataPerson = 'Mirshodbek Bakhromov';
+  bool result = false;
 
-  Future scanQR() async {
+  Future scanQR(BuildContext context) async {
     try {
-      print('ola');
       qrCode = await BarcodeScanner.scan();
+      await showDialogs(context);
     } on PlatformException catch (ex) {
       if (ex.code == BarcodeScanner.CameraAccessDenied) {
         qrCode = "Camera permission was denied";
@@ -24,7 +25,51 @@ class MainProvider extends ChangeNotifier {
     } catch (ex) {
       qrCode = "Unknown Error $ex";
     }
+
     notifyListeners();
+  }
+
+  Future showDialogs(BuildContext context) async {
+    QuerySnapshot snapshot = await cloudFireStore
+        .collection('user')
+        .orderBy('timestamp', descending: true)
+        .get();
+    String code = snapshot.docs[0]['Password'];
+    if (qrCode == code) {
+      result = true;
+      message = 'Successful Completed';
+      buttonText = 'OK';
+    } else {
+      result = false;
+      message = 'Unsuccessful Completed';
+      buttonText = 'Try, Again';
+    }
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('OnLine'),
+          content: Text(message),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                result ? resultOk(context) : scanQR(context);
+              },
+              child: Text(buttonText),
+            ),
+          ],
+        );
+      },
+    );
+    notifyListeners();
+  }
+
+  resultOk(BuildContext context) {
+    Navigator.pop(context);
+  }
+
+  String getData() {
+    return qrCode;
   }
 
   Future add() async {

@@ -44,12 +44,6 @@ class RegistrationData extends StatelessWidget {
 }
 
 class WidgetChecking extends StatelessWidget {
-  final String text;
-  final IconData iconData;
-  final Color colour;
-
-  WidgetChecking({this.text, this.iconData, this.colour});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,13 +57,13 @@ class WidgetChecking extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
-            iconData,
-            color: colour,
+            Icons.qr_code,
+            color: Colors.greenAccent,
             size: 150,
           ),
           Text(
-            text,
-            style: TextStyle(color: colour),
+            'Please, Scan Your QR Code',
+            style: TextStyle(color: Colors.greenAccent),
           ),
         ],
       ),

@@ -11,40 +11,31 @@ class ScanScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MainProvider>(
       builder: (context, mainProvider, child) {
-        return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text('OnLine'),
-          ),
-          body: StreamBuilder<QuerySnapshot>(
+        return StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('user')
                 .orderBy('timestamp', descending: true)
                 .snapshots(),
             builder: (context, snapshot) {
-              String code;
-              if (snapshot.hasData) {
-                code = snapshot.data.docs[0]['Password'];
-              }
-              return Center(
-                child: WidgetChecking(
-                  iconData: Icons.qr_code,
-                  text: 'Please, Scan Your QR Code',
-                  colour: Colors.greenAccent,
+              return Scaffold(
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text('OnLine'),
                 ),
+                body: Center(
+                  child: WidgetChecking(),
+                ),
+                floatingActionButton: FloatingActionButton.extended(
+                  icon: Icon(Icons.camera_alt),
+                  label: Text("Scan"),
+                  onPressed: () async {
+                    await mainProvider.scanQR(context);
+                  },
+                ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.centerFloat,
               );
-            },
-          ),
-          floatingActionButton: FloatingActionButton.extended(
-            icon: Icon(Icons.camera_alt),
-            label: Text("Scan"),
-            onPressed: () async {
-              await mainProvider.scanQR();
-            },
-          ),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-        );
+            });
       },
     );
   }
