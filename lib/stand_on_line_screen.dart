@@ -6,6 +6,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 class StandOnLineScreen extends StatelessWidget {
   static final String id = 'stand_on_line_screen';
+  final int index;
+
+  StandOnLineScreen({this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +55,7 @@ class StandOnLineScreen extends StatelessWidget {
                       padding: EdgeInsets.all(15.0),
                       onPressed: () async {
                         await mainProvider.generateQR(context);
+                        mainProvider.addTask(index);
                       },
                       child: Text(
                         "Stand On Line",

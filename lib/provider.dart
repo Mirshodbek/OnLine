@@ -1,16 +1,34 @@
+import 'dart:collection';
+
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:online/toast/toast.dart';
+import 'package:online/visits.dart';
 import 'package:online/widgets.dart';
 
 class MainProvider extends ChangeNotifier {
   final qrData = TextEditingController();
   final cloudFireStore = FirebaseFirestore.instance;
   String qrCode, message, buttonText, qrDataPerson = 'Mirshodbek Bakhromov';
+  var countPerson = 0;
   bool result = false;
+
+  List<Visiting> _visiting = [];
+  List<String> visit = [
+    'Adliya Vazirligi Davlat Xizmatlari Agentligi',
+    'Yagona Darcha'
+  ];
+
+  UnmodifiableListView<Visiting> get visiting =>
+      UnmodifiableListView(_visiting);
+
+  void addTask(int add) {
+    _visiting.add(Visiting(visitingArea: visit[add]));
+    notifyListeners();
+  }
 
   Future scanQR(BuildContext context) async {
     try {
@@ -27,7 +45,6 @@ class MainProvider extends ChangeNotifier {
     } catch (ex) {
       qrCode = "Unknown Error $ex";
     }
-
     notifyListeners();
   }
 

@@ -26,7 +26,34 @@ class ListVisitsScreen extends StatelessWidget {
               ),
             ],
           ),
-          body: Container(),
+          body: ListView.builder(
+            itemBuilder: (context, index) {
+              final visits = mainProvider.visiting[index];
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: ListTile(
+                  leading: Container(
+                    width: 60,
+                    child: Image(
+                      image: AssetImage('images/fb.png'),
+                    ),
+                  ),
+                  title: Text(visits.visitingArea),
+                  subtitle:
+                      Text('Siz  - navbatdasiz.\nSizdan oldin   ta odam bor.'),
+                  trailing: Column(
+                    children: [
+                      Icon(
+                        Icons.people_alt_rounded,
+                      ),
+                      Text('4')
+                    ],
+                  ),
+                ),
+              );
+            },
+            itemCount: mainProvider.visiting.length,
+          ),
         );
       },
     );
