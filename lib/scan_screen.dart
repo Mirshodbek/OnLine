@@ -38,7 +38,9 @@ class ScanScreen extends StatelessWidget {
           floatingActionButton: FloatingActionButton.extended(
             icon: Icon(Icons.camera_alt),
             label: Text("Scan"),
-            onPressed: () {},
+            onPressed: () async {
+              await mainProvider.scanQR();
+            },
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
