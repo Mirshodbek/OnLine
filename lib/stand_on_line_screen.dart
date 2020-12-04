@@ -55,7 +55,7 @@ class StandOnLineScreen extends StatelessWidget {
                       padding: EdgeInsets.all(15.0),
                       onPressed: () async {
                         await mainProvider.generateQR(context);
-                        mainProvider.addTask(index);
+                        mainProvider.addVisits(index);
                       },
                       child: Text(
                         "Stand On Line",

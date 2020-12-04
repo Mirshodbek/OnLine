@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:online/list_visits_search.dart';
 import 'package:online/provider.dart';
+import 'package:online/toast/toast.dart';
 import 'package:provider/provider.dart';
 
 class ListVisitsScreen extends StatelessWidget {
@@ -10,51 +12,76 @@ class ListVisitsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MainProvider>(
       builder: (context, mainProvider, child) {
-        return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text('List Of Visits'),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.add),
-                onPressed: () {
-                  showSearch(
-                    context: context,
-                    delegate: ListVisitsSearch(),
-                  );
-                },
-              ),
-            ],
-          ),
-          body: ListView.builder(
-            itemBuilder: (context, index) {
-              final visits = mainProvider.visiting[index];
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: ListTile(
-                  leading: Container(
-                    width: 60,
-                    child: Image(
-                      image: AssetImage('images/fb.png'),
+        return StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection('user')
+                .orderBy('timestamp', descending: true)
+                .snapshots(),
+            builder: (context, snapshot) {
+              List<DocumentSnapshot> _myDocCount;
+              if (snapshot.hasData) {
+                _myDocCount = snapshot.data.docs;
+              }
+              final countPerson = _myDocCount.length;
+              deleteUser() {
+                mainProvider.cloudFireStore
+                    .collection('user')
+                    .doc(snapshot.data.docs[0].id)
+                    .delete();
+                ToastUtils.showCustomToast(
+                    context, 'Siz navbatda turishni bekor qildingiz');
+              }
+
+              return Scaffold(
+                appBar: AppBar(
+                  centerTitle: true,
+                  title: Text('List Of Visits'),
+                  actions: [
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        showSearch(
+                          context: context,
+                          delegate: ListVisitsSearch(),
+                        );
+                      },
                     ),
-                  ),
-                  title: Text(visits.visitingArea),
-                  subtitle:
-                      Text('Siz  - navbatdasiz.\nSizdan oldin   ta odam bor.'),
-                  trailing: Column(
-                    children: [
-                      Icon(
-                        Icons.people_alt_rounded,
+                  ],
+                ),
+                body: ListView.builder(
+                  itemBuilder: (context, index) {
+                    final visits = mainProvider.visiting[index];
+                    return Padding(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      child: ListTile(
+                        onLongPress: () {
+                          deleteUser();
+                          mainProvider.deleteVisits(visits);
+                        },
+                        leading: Container(
+                          width: 60,
+                          child: Image(
+                            image: AssetImage('images/fb.png'),
+                          ),
+                        ),
+                        title: Text(visits.visitingArea),
+                        subtitle: Text(
+                            'Siz ${countPerson ?? 0} - navbatdasiz.\nSizdan oldin ${countPerson - 1 ?? 0} ta odam bor.'),
+                        trailing: Column(
+                          children: [
+                            Icon(
+                              Icons.people_alt_rounded,
+                            ),
+                            Text('${countPerson ?? 0}')
+                          ],
+                        ),
                       ),
-                      Text('4')
-                    ],
-                  ),
+                    );
+                  },
+                  itemCount: mainProvider.visiting.length,
                 ),
               );
-            },
-            itemCount: mainProvider.visiting.length,
-          ),
-        );
+            });
       },
     );
   }

@@ -25,8 +25,13 @@ class MainProvider extends ChangeNotifier {
   UnmodifiableListView<Visiting> get visiting =>
       UnmodifiableListView(_visiting);
 
-  void addTask(int add) {
+  void addVisits(int add) {
     _visiting.add(Visiting(visitingArea: visit[add]));
+    notifyListeners();
+  }
+
+  void deleteVisits(Visiting delete) {
+    _visiting.remove(delete);
     notifyListeners();
   }
 
