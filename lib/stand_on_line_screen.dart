@@ -35,6 +35,7 @@ class StandOnLineScreen extends StatelessWidget {
                     height: 20,
                   ),
                   RegistrationData(
+                    controller: mainProvider.qrData,
                     hintText: 'Write password...',
                   ),
                   SizedBox(
@@ -44,7 +45,9 @@ class StandOnLineScreen extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(40, 20, 40, 0),
                     child: FlatButton(
                       padding: EdgeInsets.all(15.0),
-                      onPressed: () {},
+                      onPressed: () async {
+                        await mainProvider.add();
+                      },
                       child: Text(
                         "Stand On Line",
                         style: TextStyle(
