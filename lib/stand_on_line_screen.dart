@@ -51,7 +51,7 @@ class StandOnLineScreen extends StatelessWidget {
                     child: FlatButton(
                       padding: EdgeInsets.all(15.0),
                       onPressed: () async {
-                        await mainProvider.add();
+                        await mainProvider.generateQR();
                       },
                       child: Text(
                         "Stand On Line",
@@ -65,7 +65,10 @@ class StandOnLineScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 90,
+                  ),
                 ],
               ),
             ),

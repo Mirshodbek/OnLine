@@ -15,6 +15,16 @@ class MainProvider extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
+  }
+
+  Future generateQR() async {
+    if (qrData.text.isEmpty) {
+      qrDataPerson = "";
+    } else {
+      qrDataPerson = qrData.text;
+      qrData.clear();
+      await add();
+    }
     notifyListeners();
   }
 }
