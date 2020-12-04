@@ -77,13 +77,16 @@ class AlertDialogs extends StatelessWidget {
   final String textButton;
   final Color colour;
   final Function onPressed;
+  final bool visible;
 
-  AlertDialogs(
-      {this.iconData,
-      this.messages,
-      this.textButton,
-      this.colour,
-      this.onPressed});
+  AlertDialogs({
+    this.iconData,
+    this.messages,
+    this.textButton,
+    this.colour,
+    this.onPressed,
+    this.visible = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -120,6 +123,15 @@ class AlertDialogs extends StatelessWidget {
         FlatButton(
           onPressed: onPressed,
           child: Text(textButton),
+        ),
+        Visibility(
+          visible: visible,
+          child: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text('OK'),
+          ),
         ),
       ],
     );

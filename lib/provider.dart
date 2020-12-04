@@ -43,7 +43,10 @@ class MainProvider extends ChangeNotifier {
     } else {
       result = false;
       message = 'Unsuccessful Completed';
-      buttonText = 'Try, Again';
+      buttonText = 'Try, again';
+    }
+    if (result) {
+      cloudFireStore.collection('user').doc(snapshot.docs[0].id).delete();
     }
     showDialog(
       context: context,
@@ -53,6 +56,7 @@ class MainProvider extends ChangeNotifier {
           colour: result ? Colors.greenAccent : Colors.redAccent,
           messages: message,
           textButton: buttonText,
+          visible: !result,
           onPressed: () {
             result ? resultOk(context) : scanQR(context);
           },
@@ -64,10 +68,6 @@ class MainProvider extends ChangeNotifier {
 
   resultOk(BuildContext context) {
     Navigator.pop(context);
-  }
-
-  String getData() {
-    return qrCode;
   }
 
   Future add() async {
