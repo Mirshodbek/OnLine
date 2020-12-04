@@ -1,7 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:online/home_screen.dart';
+import 'package:online/list_of_visits.dart';
 import 'package:online/provider.dart';
+import 'package:online/scan_screen.dart';
+import 'package:online/statistic_screen.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {
@@ -25,6 +28,9 @@ class MyApp extends StatelessWidget {
         initialRoute: HomeScreen.id,
         routes: {
           HomeScreen.id: (context) => HomeScreen(),
+          ListVisitsScreen.id: (context) => ListVisitsScreen(),
+          ScanScreen.id: (context) => ScanScreen(),
+          StatisticScreen.id: (context) => StatisticScreen(),
         },
       ),
     );

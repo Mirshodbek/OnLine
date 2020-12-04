@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:online/list_of_visits.dart';
+import 'package:online/scan_screen.dart';
+import 'package:online/statistic_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static final String id = 'home_screen';
@@ -22,15 +25,21 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, ListVisitsScreen.id);
+                },
                 child: Text('Stand in line'),
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, ScanScreen.id);
+                },
                 child: Text("List of visitors"),
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, StatisticScreen.id);
+                },
                 child: Text('Statistics'),
               ),
             ],
