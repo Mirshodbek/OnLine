@@ -70,3 +70,58 @@ class WidgetChecking extends StatelessWidget {
     );
   }
 }
+
+class AlertDialogs extends StatelessWidget {
+  final IconData iconData;
+  final String messages;
+  final String textButton;
+  final Color colour;
+  final Function onPressed;
+
+  AlertDialogs(
+      {this.iconData,
+      this.messages,
+      this.textButton,
+      this.colour,
+      this.onPressed});
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(
+        'OnLine',
+        style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      content: Container(
+        height: 80,
+        child: Column(
+          children: [
+            Icon(
+              iconData,
+              size: 50,
+              color: colour,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              messages,
+              style: TextStyle(
+                color: colour,
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        FlatButton(
+          onPressed: onPressed,
+          child: Text(textButton),
+        ),
+      ],
+    );
+  }
+}

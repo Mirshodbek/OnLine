@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:online/widgets.dart';
 
 class MainProvider extends ChangeNotifier {
   final qrData = TextEditingController();
@@ -47,17 +48,14 @@ class MainProvider extends ChangeNotifier {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text('OnLine'),
-          content: Text(message),
-          actions: [
-            FlatButton(
-              onPressed: () {
-                result ? resultOk(context) : scanQR(context);
-              },
-              child: Text(buttonText),
-            ),
-          ],
+        return AlertDialogs(
+          iconData: result ? Icons.check : Icons.clear,
+          colour: result ? Colors.greenAccent : Colors.redAccent,
+          messages: message,
+          textButton: buttonText,
+          onPressed: () {
+            result ? resultOk(context) : scanQR(context);
+          },
         );
       },
     );
