@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:online/stand_on_line_screen.dart';
 
 class ListVisitsSearch extends SearchDelegate<String> {
   final list = [
@@ -45,7 +46,9 @@ class ListVisitsSearch extends SearchDelegate<String> {
       padding: EdgeInsets.symmetric(vertical: 15),
       child: ListView.builder(
         itemBuilder: (context, index) => ListTile(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, StandOnLineScreen.id);
+          },
           leading: Container(
             width: 60,
             child: Image(

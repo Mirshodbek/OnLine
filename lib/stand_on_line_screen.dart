@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:online/provider.dart';
 import 'package:provider/provider.dart';
 
-class StandOnLine extends StatelessWidget {
+class StandOnLineScreen extends StatelessWidget {
+  static final String id = 'stand_on_line_screen';
   @override
   Widget build(BuildContext context) {
     return Consumer<MainProvider>(
@@ -12,6 +13,7 @@ class StandOnLine extends StatelessWidget {
             centerTitle: true,
             title: Text('Stand On Line'),
           ),
+          body: Container(),
         );
       },
     );

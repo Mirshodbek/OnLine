@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:online/list_of_visits.dart';
+import 'package:online/list_of_visits_screen.dart';
 import 'package:online/scan_screen.dart';
 import 'package:online/statistic_screen.dart';
 
