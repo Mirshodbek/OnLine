@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:online/home_screen.dart';
 import 'package:online/provider.dart';
-import 'package:online/scan_screen.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {
@@ -22,7 +22,10 @@ class MyApp extends StatelessWidget {
             headline6: TextStyle(color: Colors.grey[700]),
           ),
         ),
-        home: ScanScreen(),
+        initialRoute: HomeScreen.id,
+        routes: {
+          HomeScreen.id: (context) => HomeScreen(),
+        },
       ),
     );
   }
