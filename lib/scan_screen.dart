@@ -22,7 +22,7 @@ class ScanScreen extends StatelessWidget {
                 .orderBy('timestamp', descending: true)
                 .snapshots(),
             builder: (context, snapshot) {
-              var code;
+              String code;
               if (snapshot.hasData) {
                 code = snapshot.data.docs[0]['Password'];
               }
