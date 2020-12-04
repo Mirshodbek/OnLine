@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:online/provider.dart';
-import 'package:online/widgets.dart';
+import 'package:online/provider/provider.dart';
+import 'package:online/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
 class ScanScreen extends StatelessWidget {

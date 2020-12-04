@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:online/provider.dart';
-import 'package:online/stand_on_line_screen.dart';
+import 'package:online/app_screens/stand_on_line_screen.dart';
+import 'package:online/provider/provider.dart';
 import 'package:provider/provider.dart';
 
 class ListVisitsSearch extends SearchDelegate<String> {

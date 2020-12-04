@@ -1,11 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:online/home_screen.dart';
-import 'package:online/list_of_visits_screen.dart';
-import 'package:online/provider.dart';
-import 'package:online/scan_screen.dart';
-import 'package:online/stand_on_line_screen.dart';
-import 'package:online/statistic_screen.dart';
+import 'package:online/app_screens/home_screen.dart';
+import 'package:online/app_screens/list_of_visits_screen.dart';
+import 'package:online/app_screens/scan_screen.dart';
+import 'package:online/app_screens/statistic_screen.dart';
+import 'package:online/provider/provider.dart';
 import 'package:provider/provider.dart';
 
 Future main() async {
@@ -32,7 +31,6 @@ class MyApp extends StatelessWidget {
           ListVisitsScreen.id: (context) => ListVisitsScreen(),
           ScanScreen.id: (context) => ScanScreen(),
           StatisticScreen.id: (context) => StatisticScreen(),
-          StandOnLineScreen.id: (context) => StandOnLineScreen(),
         },
       ),
     );

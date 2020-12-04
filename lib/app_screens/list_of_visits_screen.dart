@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:online/list_visits_search.dart';
-import 'package:online/provider.dart';
+import 'package:online/provider/provider.dart';
 import 'package:online/toast/toast.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +30,7 @@ class ListVisitsScreen extends StatelessWidget {
                     .doc(snapshot.data.docs[0].id)
                     .delete();
                 ToastUtils.showCustomToast(
-                    context, 'Siz navbatda turishni bekor qildingiz');
+                    context, 'You have denied your line!');
               }
 
               return Scaffold(

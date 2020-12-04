@@ -5,9 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:online/provider/visits.dart';
 import 'package:online/toast/toast.dart';
-import 'package:online/visits.dart';
-import 'package:online/widgets.dart';
+import 'package:online/widgets/widgets.dart';
 
 class MainProvider extends ChangeNotifier {
   final qrData = TextEditingController();

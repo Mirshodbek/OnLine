@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:online/list_of_visits_screen.dart';
-import 'package:online/scan_screen.dart';
-import 'package:online/statistic_screen.dart';
+import 'package:online/app_screens/list_of_visits_screen.dart';
+import 'package:online/app_screens/scan_screen.dart';
+import 'package:online/app_screens/statistic_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   static final String id = 'home_screen';
