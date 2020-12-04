@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:online/toast/toast.dart';
 import 'package:online/widgets.dart';
 
 class MainProvider extends ChangeNotifier {
@@ -47,6 +48,7 @@ class MainProvider extends ChangeNotifier {
     }
     if (result) {
       cloudFireStore.collection('user').doc(snapshot.docs[0].id).delete();
+      ToastUtils.showCustomToast(context, 'Deleted data from cloud!');
     }
     showDialog(
       context: context,
@@ -81,13 +83,14 @@ class MainProvider extends ChangeNotifier {
     }
   }
 
-  Future generateQR() async {
+  Future generateQR(BuildContext context) async {
     if (qrData.text.isEmpty) {
       qrDataPerson = "";
     } else {
       qrDataPerson = qrData.text;
       qrData.clear();
       await add();
+      ToastUtils.showCustomToast(context, 'You stand on line!');
     }
     notifyListeners();
   }
