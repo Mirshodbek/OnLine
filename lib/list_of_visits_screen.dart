@@ -19,10 +19,11 @@ class ListVisitsScreen extends StatelessWidget {
                 .snapshots(),
             builder: (context, snapshot) {
               List<DocumentSnapshot> _myDocCount;
+              int countPerson;
               if (snapshot.hasData) {
                 _myDocCount = snapshot.data.docs;
+                countPerson = _myDocCount.length;
               }
-              final countPerson = _myDocCount.length;
               deleteUser() {
                 mainProvider.cloudFireStore
                     .collection('user')
@@ -51,6 +52,9 @@ class ListVisitsScreen extends StatelessWidget {
                 body: ListView.builder(
                   itemBuilder: (context, index) {
                     final visits = mainProvider.visiting[index];
+                    if (mainProvider.result) {
+                      mainProvider.deleteVisits(visits);
+                    }
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: ListTile(

@@ -13,7 +13,6 @@ class MainProvider extends ChangeNotifier {
   final qrData = TextEditingController();
   final cloudFireStore = FirebaseFirestore.instance;
   String qrCode, message, buttonText, qrDataPerson = 'Mirshodbek Bakhromov';
-  var countPerson = 0;
   bool result = false;
 
   List<Visiting> _visiting = [];
