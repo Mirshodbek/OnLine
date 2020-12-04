@@ -15,7 +15,6 @@ class MainProvider extends ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    print('gog');
     notifyListeners();
   }
 }

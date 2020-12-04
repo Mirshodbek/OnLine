@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:online/provider.dart';
 import 'package:online/widgets.dart';
 import 'package:provider/provider.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class StandOnLineScreen extends StatelessWidget {
   static final String id = 'stand_on_line_screen';
+
   @override
   Widget build(BuildContext context) {
     return Consumer<MainProvider>(
@@ -21,6 +23,9 @@ class StandOnLineScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  QrImage(
+                    data: mainProvider.qrDataPerson,
+                  ),
                   SizedBox(
                     height: 40.0,
                   ),
