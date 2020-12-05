@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:online/provider/provider.dart';
-import 'package:online/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -29,24 +28,7 @@ class StandOnLineScreen extends StatelessWidget {
                     data: mainProvider.qrTime,
                   ),
                   SizedBox(
-                    height: 40.0,
-                  ),
-                  Text(
-                    "Password",
-                    style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.black,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  RegistrationData(
-                    controller: mainProvider.qrData,
-                    hintText: 'Write password...',
-                  ),
-                  SizedBox(
-                    height: 10,
+                    height: 130.0,
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(40, 20, 40, 0),

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:online/indicators_widget.dart';
 import 'package:online/pie_chart_sections.dart';
+import 'package:online/widgets/widgets.dart';
 
 class PieChartPage extends StatefulWidget {
   @override

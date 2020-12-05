@@ -95,8 +95,8 @@ class MainProvider extends ChangeNotifier {
         .collection('user')
         .orderBy('timestamp', descending: true)
         .get();
-    String code = snapshot.docs[0]['Password'];
-    if (qrCode == code) {
+    String code = snapshot.docs[0]['time'];
+    if (qrTime == code) {
       result = true;
       message = 'Successful Completed';
       buttonText = 'OK';
@@ -136,7 +136,6 @@ class MainProvider extends ChangeNotifier {
     qrTime = DateTime.now().toString();
     try {
       await cloudFireStore.collection('user').add({
-        'Password': 'qrDataPerson',
         'timestamp': DateTime.now(),
         'time': qrTime,
       });
