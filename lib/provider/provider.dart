@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:online/provider/visits.dart';
 import 'package:online/toast/toast.dart';
 import 'package:online/widgets/widgets.dart';
@@ -12,6 +13,7 @@ import 'package:online/widgets/widgets.dart';
 class MainProvider extends ChangeNotifier {
   final qrData = TextEditingController();
   final cloudFireStore = FirebaseFirestore.instance;
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String qrCode, message, buttonText, qrDataPerson = 'Mirshodbek Bakhromov';
   bool result = false;
 
@@ -90,6 +92,7 @@ class MainProvider extends ChangeNotifier {
   }
 
   resultOk(BuildContext context) {
+    showNotification();
     Navigator.pop(context);
   }
 
@@ -114,5 +117,30 @@ class MainProvider extends ChangeNotifier {
       ToastUtils.showCustomToast(context, 'You stand on line!');
     }
     notifyListeners();
+  }
+
+  void pushInit() {
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = new IOSInitializationSettings();
+    var initSettings = new InitializationSettings(android: android, iOS: iOS);
+    flutterLocalNotificationsPlugin.initialize(initSettings);
+  }
+
+  showNotification() async {
+    var android = new AndroidNotificationDetails(
+        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
+        priority: Priority.high, importance: Importance.max);
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android: android, iOS: iOS);
+    QuerySnapshot snapshot = await cloudFireStore.collection('user').get();
+    List<DocumentSnapshot> _myDocCount = snapshot.docs;
+    final countPerson = _myDocCount.length;
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'OnLine',
+      'There are $countPerson people!',
+      platform,
+    );
   }
 }
