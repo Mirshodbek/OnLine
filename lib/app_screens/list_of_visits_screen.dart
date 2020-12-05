@@ -80,7 +80,7 @@ class ListVisitsScreen extends StatelessWidget {
                         ),
                         title: Text(visits.visitingArea),
                         subtitle: Text(
-                            'Siz ${countPerson ?? 0} - navbatdasiz.\nSizdan oldin ${countPerson - 1 ?? 0} ta odam bor.'),
+                            'You are in ${countPerson ?? 0} - line.\nThere are ${countPerson - 1 ?? 0} visitors before you.'),
                         trailing: Column(
                           children: [
                             Icon(
