@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:online/pie_data.dart';
+import 'package:online/pie_chart/pie_data.dart';
 
 List<PieChartSectionData> getSections(int touchedIndex) {
   return PieData()
@@ -19,7 +19,6 @@ List<PieChartSectionData> getSections(int touchedIndex) {
           titleStyle: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
-            color: const Color(0xffffffff),
           ),
         );
 

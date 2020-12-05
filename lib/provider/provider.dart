@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:online/pie_data.dart';
 import 'package:online/provider/visits.dart';
 import 'package:online/toast/toast.dart';
 import 'package:online/widgets/widgets.dart';
@@ -18,20 +17,18 @@ class MainProvider extends ChangeNotifier {
   String qrCode, message, buttonText, qrDataPerson = 'Mirshodbek Bakhromov';
   var qrTime = DateTime.now().toString();
   bool result = false;
-  static double visitedPeople = 0;
+  static double visitedPeople = 10, deniedPeople = 10, countPeople = 10;
 
   List<Visiting> _visiting = [];
   List<String> visit = [
     'Adliya Vazirligi Davlat Xizmatlari Agentligi',
     'Yagona Darcha'
   ];
-  List<int> id = [0, 1];
-
   UnmodifiableListView<Visiting> get visiting =>
       UnmodifiableListView(_visiting);
 
   void addVisits(int add) {
-    _visiting.add(Visiting(visitingArea: visit[add], id: id[add]));
+    _visiting.add(Visiting(visitingArea: visit[add]));
     notifyListeners();
   }
 
@@ -114,8 +111,17 @@ class MainProvider extends ChangeNotifier {
     }
   }
 
-  Future pieData() async {
-    await PieData().dataPie();
+  List<DocumentSnapshot> _myDocCount;
+
+  Future dataPie() async {
+    QuerySnapshot snapshot = await cloudFireStore.collection('user').get();
+    // var listData = snapshot.docs[0]['Password'];
+
+    if (snapshot.docs.isNotEmpty) {
+      _myDocCount = snapshot.docs;
+      int countCustomer = _myDocCount.length;
+      countPeople = countCustomer.toDouble();
+    }
     notifyListeners();
   }
 

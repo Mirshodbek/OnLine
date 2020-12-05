@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:online/pie_data.dart';
+import 'package:online/pie_chart/pie_data.dart';
 
 class IndicatorsWidget extends StatelessWidget {
   @override
@@ -24,7 +24,7 @@ class IndicatorsWidget extends StatelessWidget {
     @required String text,
     bool isSquare = false,
     double size = 16,
-    Color textColor = const Color(0xff505050),
+    Color textColor = const Color(0xffFAFAFA),
   }) =>
       Row(
         children: <Widget>[

@@ -30,6 +30,7 @@ class ListVisitsScreen extends StatelessWidget {
                     .collection('user')
                     .doc(snapshot.data.docs[0].id)
                     .delete();
+                MainProvider.deniedPeople++;
                 ToastUtils.showCustomToast(
                     context, 'You have denied your line!');
               }
