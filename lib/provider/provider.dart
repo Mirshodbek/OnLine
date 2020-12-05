@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:online/pie_data.dart';
 import 'package:online/provider/visits.dart';
 import 'package:online/toast/toast.dart';
 import 'package:online/widgets/widgets.dart';
@@ -15,6 +16,7 @@ class MainProvider extends ChangeNotifier {
   final cloudFireStore = FirebaseFirestore.instance;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String qrCode, message, buttonText, qrDataPerson = 'Mirshodbek Bakhromov';
+  var qrTime = DateTime.now().toString();
   bool result = false;
 
   List<Visiting> _visiting = [];
@@ -36,9 +38,43 @@ class MainProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  List data(QuerySnapshot snapshot) {
+    var listData = snapshot.docs[0]['Password'];
+    List<DocumentSnapshot> _myDocCount;
+    double countPerson;
+    if (snapshot.docs.isNotEmpty) {
+      _myDocCount = snapshot.docs;
+      int countPeople = _myDocCount.length;
+      countPerson = countPeople.toDouble();
+    }
+    List<Data> data = [
+      Data(
+        name: 'Visitors (Standing on line)',
+        percent: countPerson,
+        color: const Color(0xff0293ee),
+      ),
+      Data(
+        name: 'Visitors (Visited in office)',
+        percent: 30,
+        color: const Color(0xfff8b250),
+      ),
+      Data(
+        name: 'Visitors(Denied)',
+        percent: 15,
+        color: Colors.black,
+      ),
+      Data(
+        name: "Visitors(Booked but don't visited)",
+        percent: 15,
+        color: const Color(0xff13d38e),
+      ),
+    ];
+    return data;
+  }
+
   Future scanQR(BuildContext context) async {
     try {
-      qrCode = await BarcodeScanner.scan();
+      qrTime = await BarcodeScanner.scan();
       await showDialogs(context);
     } on PlatformException catch (ex) {
       if (ex.code == BarcodeScanner.CameraAccessDenied) {
@@ -96,28 +132,32 @@ class MainProvider extends ChangeNotifier {
     Navigator.pop(context);
   }
 
-  Future add() async {
+  Future add(BuildContext context) async {
+    qrTime = DateTime.now().toString();
     try {
       await cloudFireStore.collection('user').add({
-        'Password': qrDataPerson,
+        'Password': 'qrDataPerson',
         'timestamp': DateTime.now(),
+        'time': qrTime,
       });
+      ToastUtils.showCustomToast(context, 'You stand on line!');
     } catch (e) {
       print(e);
     }
   }
-
-  Future generateQR(BuildContext context) async {
-    if (qrData.text.isEmpty) {
-      qrDataPerson = "";
-    } else {
-      qrDataPerson = qrData.text;
-      qrData.clear();
-      await add();
-      ToastUtils.showCustomToast(context, 'You stand on line!');
-    }
-    notifyListeners();
-  }
+  //
+  // Future generateQR(BuildContext context) async {
+  //   if (qrData.text.isEmpty) {
+  //     qrDataPerson = "";
+  //     // await add();
+  //   } else {
+  //     qrDataPerson = qrData.text;
+  //     qrData.clear();
+  //     // await add();
+  //     ToastUtils.showCustomToast(context, 'You stand on line!');
+  //   }
+  //   notifyListeners();
+  // }
 
   void pushInit() {
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();

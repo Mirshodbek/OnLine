@@ -26,7 +26,7 @@ class StandOnLineScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   QrImage(
-                    data: mainProvider.qrDataPerson,
+                    data: mainProvider.qrTime,
                   ),
                   SizedBox(
                     height: 40.0,
@@ -53,7 +53,7 @@ class StandOnLineScreen extends StatelessWidget {
                     child: FlatButton(
                       padding: EdgeInsets.all(15.0),
                       onPressed: () async {
-                        await mainProvider.generateQR(context);
+                        await mainProvider.add(context);
                         mainProvider.addVisits(index);
                       },
                       child: Text(
