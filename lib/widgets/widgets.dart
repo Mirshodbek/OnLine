@@ -1,38 +1,23 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:online/provider/provider.dart';
-import 'package:provider/provider.dart';
+import 'package:online/pie_data.dart';
 
 class IndicatorsWidget extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return Consumer<MainProvider>(
-      builder: (context, mainProvider, child) {
-        return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance
-                .collection('user')
-                .orderBy('timestamp', descending: true)
-                .snapshots(),
-            builder: (context, snapshot) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: mainProvider
-                    .data(snapshot.data)
-                    .map(
-                      (data) => Container(
-                          padding: EdgeInsets.symmetric(vertical: 2),
-                          child: buildIndicator(
-                            color: data.color,
-                            text: data.name,
-                            // isSquare: true,
-                          )),
-                    )
-                    .toList(),
-              );
-            });
-      },
-    );
-  }
+  Widget build(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: PieData()
+            .data
+            .map(
+              (data) => Container(
+                  padding: EdgeInsets.symmetric(vertical: 2),
+                  child: buildIndicator(
+                    color: data.color,
+                    text: data.name,
+                    // isSquare: true,
+                  )),
+            )
+            .toList(),
+      );
 
   Widget buildIndicator({
     @required Color color,

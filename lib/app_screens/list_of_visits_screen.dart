@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:online/app_screens/stand_on_line_screen.dart';
 import 'package:online/list_visits_search.dart';
 import 'package:online/provider/provider.dart';
 import 'package:online/toast/toast.dart';
@@ -61,6 +62,14 @@ class ListVisitsScreen extends StatelessWidget {
                         onLongPress: () {
                           deleteUser();
                           mainProvider.deleteVisits(visits);
+                        },
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => StandOnLineScreen(),
+                            ),
+                          );
                         },
                         leading: Container(
                           width: 60,

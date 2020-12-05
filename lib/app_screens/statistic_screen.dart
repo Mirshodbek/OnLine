@@ -11,6 +11,7 @@ class StatisticScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MainProvider>(
       builder: (context, mainProvider, child) {
+        mainProvider.pieData();
         return StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection('user')

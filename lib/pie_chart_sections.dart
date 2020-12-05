@@ -1,14 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:online/provider/provider.dart';
-import 'package:provider/provider.dart';
+import 'package:online/pie_data.dart';
 
-List<PieChartSectionData> getSections(
-    int touchedIndex, QuerySnapshot snapshot) {
-  BuildContext context;
-  return Provider.of<MainProvider>(context)
-      .data(snapshot)
+List<PieChartSectionData> getSections(int touchedIndex) {
+  return PieData()
+      .data
       .asMap()
       .map<int, PieChartSectionData>((index, data) {
         final isTouched = index == touchedIndex;

@@ -18,18 +18,20 @@ class MainProvider extends ChangeNotifier {
   String qrCode, message, buttonText, qrDataPerson = 'Mirshodbek Bakhromov';
   var qrTime = DateTime.now().toString();
   bool result = false;
+  static double visitedPeople = 0;
 
   List<Visiting> _visiting = [];
   List<String> visit = [
     'Adliya Vazirligi Davlat Xizmatlari Agentligi',
     'Yagona Darcha'
   ];
+  List<int> id = [0, 1];
 
   UnmodifiableListView<Visiting> get visiting =>
       UnmodifiableListView(_visiting);
 
   void addVisits(int add) {
-    _visiting.add(Visiting(visitingArea: visit[add]));
+    _visiting.add(Visiting(visitingArea: visit[add], id: id[add]));
     notifyListeners();
   }
 
@@ -38,43 +40,10 @@ class MainProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  List data(QuerySnapshot snapshot) {
-    var listData = snapshot.docs[0]['Password'];
-    List<DocumentSnapshot> _myDocCount;
-    double countPerson;
-    if (snapshot.docs.isNotEmpty) {
-      _myDocCount = snapshot.docs;
-      int countPeople = _myDocCount.length;
-      countPerson = countPeople.toDouble();
-    }
-    List<Data> data = [
-      Data(
-        name: 'Visitors (Standing on line)',
-        percent: countPerson,
-        color: const Color(0xff0293ee),
-      ),
-      Data(
-        name: 'Visitors (Visited in office)',
-        percent: 30,
-        color: const Color(0xfff8b250),
-      ),
-      Data(
-        name: 'Visitors(Denied)',
-        percent: 15,
-        color: Colors.black,
-      ),
-      Data(
-        name: "Visitors(Booked but don't visited)",
-        percent: 15,
-        color: const Color(0xff13d38e),
-      ),
-    ];
-    return data;
-  }
-
   Future scanQR(BuildContext context) async {
     try {
       qrTime = await BarcodeScanner.scan();
+      visitedPeople++;
       await showDialogs(context);
     } on PlatformException catch (ex) {
       if (ex.code == BarcodeScanner.CameraAccessDenied) {
@@ -144,19 +113,11 @@ class MainProvider extends ChangeNotifier {
       print(e);
     }
   }
-  //
-  // Future generateQR(BuildContext context) async {
-  //   if (qrData.text.isEmpty) {
-  //     qrDataPerson = "";
-  //     // await add();
-  //   } else {
-  //     qrDataPerson = qrData.text;
-  //     qrData.clear();
-  //     // await add();
-  //     ToastUtils.showCustomToast(context, 'You stand on line!');
-  //   }
-  //   notifyListeners();
-  // }
+
+  Future pieData() async {
+    await PieData().dataPie();
+    notifyListeners();
+  }
 
   void pushInit() {
     flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
