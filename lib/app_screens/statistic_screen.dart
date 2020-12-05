@@ -21,7 +21,7 @@ class StatisticScreen extends StatelessWidget {
               return Scaffold(
                 appBar: AppBar(
                   centerTitle: true,
-                  title: Text('Statistics'),
+                  title: Text('On Line\nStatistics'),
                 ),
                 body: PieChartPage(),
               );

@@ -21,7 +21,7 @@ class ScanScreen extends StatelessWidget {
               return Scaffold(
                 appBar: AppBar(
                   centerTitle: true,
-                  title: Text('OnLine'),
+                  title: Text('On Line'),
                 ),
                 body: Center(
                   child: WidgetChecking(),

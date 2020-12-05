@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('OnLine'),
+        title: Text('On Line'),
       ),
       body: Container(
         decoration: BoxDecoration(

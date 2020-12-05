@@ -15,7 +15,7 @@ class StandOnLineScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text('Stand On Line'),
+            title: Text('On Line'),
           ),
           body: SingleChildScrollView(
             child: Container(
