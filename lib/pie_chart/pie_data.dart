@@ -5,7 +5,7 @@ class PieData {
   List<Data> data = [
     Data(
       name: 'Visitors (Standing on line)',
-      percent: MainProvider.countPeople,
+      percent: MainProvider.countPeopleStandOnLine,
       color: const Color(0xff0293ee),
     ),
     Data(

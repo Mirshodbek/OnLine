@@ -14,16 +14,25 @@ class MainProvider extends ChangeNotifier {
   final qrData = TextEditingController();
   final cloudFireStore = FirebaseFirestore.instance;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
-  String qrCode, message, buttonText, qrDataPerson = 'Mirshodbek Bakhromov';
-  var qrTime = DateTime.now().toString();
+  String qrCode,
+      message,
+      buttonText,
+      qrDataPerson = 'Mirshodbek Bakhromov',
+      qrTime = DateTime.now().toString();
+  List<DocumentSnapshot> _myDocCount;
+  static double visitedPeople = 12,
+      deniedPeople = 23,
+      countPeopleStandOnLine = 34;
   bool result = false;
-  static double visitedPeople = 10, deniedPeople = 10, countPeople = 10;
 
+  //It is for add list of visits
+  //start
   List<Visiting> _visiting = [];
   List<String> visit = [
     'Adliya Vazirligi Davlat Xizmatlari Agentligi',
     'Yagona Darcha'
   ];
+
   UnmodifiableListView<Visiting> get visiting =>
       UnmodifiableListView(_visiting);
 
@@ -37,6 +46,10 @@ class MainProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //end
+
+  //This is for scanner qr codes
+  //start
   Future scanQR(BuildContext context) async {
     try {
       qrTime = await BarcodeScanner.scan();
@@ -56,6 +69,8 @@ class MainProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //It is for giving message checked
+  //continue
   Future showDialogs(BuildContext context) async {
     QuerySnapshot snapshot = await cloudFireStore
         .collection('user')
@@ -93,11 +108,44 @@ class MainProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  //This for return back
+  //continue
   resultOk(BuildContext context) {
     showNotification();
     Navigator.pop(context);
   }
 
+  //This is local push notification for giving information about count people to receiver
+  //continue
+  void pushInit() {
+    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
+    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
+    var iOS = new IOSInitializationSettings();
+    var initSettings = new InitializationSettings(android: android, iOS: iOS);
+    flutterLocalNotificationsPlugin.initialize(initSettings);
+  }
+
+  //continue
+  showNotification() async {
+    var android = new AndroidNotificationDetails(
+        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
+        priority: Priority.high, importance: Importance.max);
+    var iOS = new IOSNotificationDetails();
+    var platform = new NotificationDetails(android: android, iOS: iOS);
+    QuerySnapshot snapshot = await cloudFireStore.collection('user').get();
+    _myDocCount = snapshot.docs;
+    final countPerson = _myDocCount.length;
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      'OnLine',
+      'There are $countPerson people!',
+      platform,
+    );
+  }
+  //end
+
+  //This function for booking visitors
+  //start
   Future add(BuildContext context) async {
     qrTime = DateTime.now().toString();
     try {
@@ -110,43 +158,18 @@ class MainProvider extends ChangeNotifier {
       print(e);
     }
   }
+  //end
 
-  List<DocumentSnapshot> _myDocCount;
-
+  //This for statistics screen
+  //start
   Future dataPie() async {
     QuerySnapshot snapshot = await cloudFireStore.collection('user').get();
-    // var listData = snapshot.docs[0]['Password'];
-
     if (snapshot.docs.isNotEmpty) {
       _myDocCount = snapshot.docs;
       int countCustomer = _myDocCount.length;
-      countPeople = countCustomer.toDouble();
+      countPeopleStandOnLine = countCustomer.toDouble();
     }
     notifyListeners();
   }
-
-  void pushInit() {
-    flutterLocalNotificationsPlugin = new FlutterLocalNotificationsPlugin();
-    var android = new AndroidInitializationSettings('@mipmap/ic_launcher');
-    var iOS = new IOSInitializationSettings();
-    var initSettings = new InitializationSettings(android: android, iOS: iOS);
-    flutterLocalNotificationsPlugin.initialize(initSettings);
-  }
-
-  showNotification() async {
-    var android = new AndroidNotificationDetails(
-        'channel id', 'channel NAME', 'CHANNEL DESCRIPTION',
-        priority: Priority.high, importance: Importance.max);
-    var iOS = new IOSNotificationDetails();
-    var platform = new NotificationDetails(android: android, iOS: iOS);
-    QuerySnapshot snapshot = await cloudFireStore.collection('user').get();
-    List<DocumentSnapshot> _myDocCount = snapshot.docs;
-    final countPerson = _myDocCount.length;
-    await flutterLocalNotificationsPlugin.show(
-      0,
-      'OnLine',
-      'There are $countPerson people!',
-      platform,
-    );
-  }
+  //end
 }
