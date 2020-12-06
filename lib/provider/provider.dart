@@ -11,7 +11,6 @@ import 'package:online/toast/toast.dart';
 import 'package:online/widgets/widgets.dart';
 
 class MainProvider extends ChangeNotifier {
-  final qrData = TextEditingController();
   final cloudFireStore = FirebaseFirestore.instance;
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
   String qrCode,
@@ -45,7 +44,6 @@ class MainProvider extends ChangeNotifier {
     _visiting.remove(delete);
     notifyListeners();
   }
-
   //end
 
   //This is for scanner qr codes

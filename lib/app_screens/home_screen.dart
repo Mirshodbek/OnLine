@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, ListVisitsScreen.id);
                 },
-                child: Text('Stand in line'),
+                child: Text('Stand on line'),
               ),
               RaisedButton(
                 onPressed: () {
